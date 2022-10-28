@@ -1,4 +1,4 @@
-package com.roboskeletron.task8.console;
+package com.roboskeletron.task8;
 
 import java.util.Objects;
 

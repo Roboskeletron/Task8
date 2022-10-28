@@ -1,11 +1,12 @@
 package com.roboskeletron.task8;
 
-import com.roboskeletron.task8.console.InputArgs;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class ArrayIO {
     private final FileInputStream inputStream;
@@ -16,14 +17,22 @@ public class ArrayIO {
         outputStream = new FileOutputStream(ioInfo.outputFile);
     }
 
-    public List<List<Integer>> getArray(){
+    public Vector<Vector> getArray(){
+        return getArray(inputStream);
+    }
+
+    public void saveArray(Vector<Vector> array) throws IOException {
+        saveArray(array, outputStream);
+    }
+
+    public static Vector<Vector> getArray(FileInputStream inputStream){
         Scanner file = new Scanner(inputStream, StandardCharsets.UTF_8);
         int width = 0;
 
-        List<List<Integer>> lines = new ArrayList<>();
+        Vector<Vector> lines = new Vector<>();
         
         while (file.hasNextLine()){
-            List<Integer> line = new ArrayList<>();
+            Vector<Integer> line = new Vector<>();
             Scanner line_reader = new Scanner(file.nextLine());
             
             while (line_reader.hasNextInt())
@@ -38,20 +47,24 @@ public class ArrayIO {
         return lines;
     }
     
-    public void saveArray(List<List<Integer>> array) throws IOException {
+    public static void saveArray(Vector<Vector> array, FileOutputStream outputStream) throws IOException {
         if (!outputStream.getChannel().isOpen())
             return;
 
         outputStream.getChannel().position(0);
 
-        for (int h = 0; h < array.size(); h++){
-            var line = array.get(h);
-            
-            for (int w = 0; w < line.size(); w++){
-                byte[] data = line.get(w).toString().getBytes(StandardCharsets.UTF_8);
-                outputStream.write(data);
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (Vector line : array) {
+            for (Object o : line) {
+                stringBuilder.append(o);
+                stringBuilder.append(" ");
             }
+            stringBuilder.append("\n");
         }
+
+        byte[] data = stringBuilder.toString().getBytes(StandardCharsets.UTF_8);
+        outputStream.write(data);
 
         outputStream.flush();
     }
