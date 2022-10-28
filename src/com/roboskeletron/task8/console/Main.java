@@ -10,10 +10,8 @@ import java.util.List;
 
 public class Main {
 
-    private static InputArgs ioInfo;
-
     public static void main(String[] args) throws FileNotFoundException {
-        ioInfo = new InputArgs(args);
+        InputArgs ioInfo = new InputArgs(args);
         ArrayIO io = new ArrayIO(ioInfo);
         var rectangle = solution(io);
         int height = rectangle.bottomRight.heightIndex() - rectangle.topLeft.heightIndex() + 1;
@@ -28,7 +26,7 @@ public class Main {
         int height = array.size();
         int width = array.get(0).size();
 
-        array = addZeroPadding(array);
+        addZeroPadding(array);
 
         var rectangles = getRectangles(height, width, array);
 
@@ -56,13 +54,12 @@ public class Main {
         return sum == rectangle.area;
     }
 
-    public static List<List<Integer>> addZeroPadding(List<List<Integer>> array){
+    public static void addZeroPadding(List<List<Integer>> array){
         int width = array.get(0).size();
-        int height = array.size();
 
-        for (int i = 0; i < height; i++){
-            array.get(i).add(0);
-            array.get(i).add(0, 0);
+        for (List<Integer> val : array) {
+            val.add(0);
+            val.add(0, 0);
         }
         width+=2;
         List<Integer> padding = new ArrayList<>();
@@ -72,8 +69,6 @@ public class Main {
 
         array.add(padding);
         array.add(0, padding);
-
-        return array;
     }
 
     public static List<Rectangle> getRectangles(int height, int width, List<List<Integer>> array){
