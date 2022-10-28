@@ -6,6 +6,7 @@ import com.roboskeletron.task8.Rectangle;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Main {
@@ -30,7 +31,11 @@ public class Main {
 
         var rectangles = getRectangles(height, width, array);
 
-        rectangles.sort(Rectangle::compareTo);
+        var comparator = Comparator.comparing((Rectangle rect)->rect.area, Comparator.reverseOrder())
+                        .thenComparing((Rectangle rect)->rect.topLeft.heightIndex())
+                                .thenComparing((Rectangle rect)->rect.topLeft.widthIndex());
+
+        rectangles.sort(comparator);
 
         for (Rectangle rectangle : rectangles){
             if (hasCorrectBoarder(rectangle, array))
