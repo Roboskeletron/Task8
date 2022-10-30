@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Vector;
 
 public class SearchRectangle {
-    public static Rectangle searchRectangle(ArrayIO io){
-        var array = io.getArray();
+    public static Rectangle searchRectangle(Vector<Vector> array){
         int height = array.size();
         int width = array.get(0).size();
 

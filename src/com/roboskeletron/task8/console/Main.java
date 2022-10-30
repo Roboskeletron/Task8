@@ -12,11 +12,9 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         InputArgs ioInfo = new InputArgs(args);
         ArrayIO io = new ArrayIO(ioInfo);
-        var rectangle = searchRectangle(io);
-        int height = rectangle.bottomRight.heightIndex() - rectangle.topLeft.heightIndex() + 1;
-        int width = rectangle.bottomRight.widthIndex() - rectangle.topLeft.widthIndex() + 1;
+        var array = io.getArray();
+        var rectangle = searchRectangle(array);
 
-        System.out.printf("(%d, %d, %d, %d)", rectangle.topLeft.heightIndex() - 1, rectangle.topLeft.widthIndex() - 1,
-                height, width);
+        System.out.print(rectangle.toString());
     }
 }
