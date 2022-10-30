@@ -1,6 +1,7 @@
 package com.roboskeletron.task8.jtable;
 
 import com.roboskeletron.task8.ArrayIO;
+import com.roboskeletron.task8.SearchRectangle;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -22,19 +23,48 @@ public class MainWindow {
         frame.setSize(480, 480);
 
         JScrollPane scrollPane = new JScrollPane(table);
+        JPanel tableControls = new JPanel();
+        JPanel rowControls = new JPanel();
+        JPanel columnControls = new JPanel();
+        JPanel searchControls = new JPanel();
 
         JMenuItem openButton = new JMenuItem("Open");
         JMenuItem saveButton = new JMenuItem("Save");
+        JMenuItem closeButton = new JMenuItem("Close");
 
         JMenu menu = new JMenu("File");
         menu.add(openButton);
         menu.add(saveButton);
+        menu.add(closeButton);
 
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(menu);
 
+        JButton addLine = new JButton("Add row");
+        JButton deleteLine = new JButton("Delete row");
+        JButton addColumn = new JButton("Add column");
+        JButton deleteColumn = new JButton("Delete column");
+        JButton getRectangle = new JButton("Search rectangle");
+
+        JLabel resultLabel = new JLabel();
+
+        rowControls.add(addLine);
+        rowControls.add(deleteLine);
+
+        columnControls.add(addColumn);
+        columnControls.add(deleteColumn);
+
+        searchControls.add(getRectangle);
+        searchControls.add(resultLabel);
+
+        tableControls.setLayout(new BoxLayout(tableControls, BoxLayout.PAGE_AXIS));
+        tableControls.add(searchControls);
+        tableControls.add(rowControls);
+        tableControls.add(columnControls);
+
         frame.getContentPane().add(BorderLayout.NORTH, menuBar);
         frame.getContentPane().add(BorderLayout.CENTER, scrollPane);
+        frame.getContentPane().add(BorderLayout.SOUTH, tableControls);
 
         FileFilter filter = new FileFilter() {
             @Override
@@ -73,6 +103,27 @@ public class MainWindow {
                     ex.printStackTrace();
                 }
             }
+        });
+        addColumn.addActionListener(e -> {
+
+        });
+        addLine.addActionListener(e -> {
+
+        });
+        deleteColumn.addActionListener(e -> {
+
+        });
+        deleteLine.addActionListener(e -> {
+
+        });
+        getRectangle.addActionListener(e -> {
+            var model = (DefaultTableModel) table.getModel();
+            var rectangle = SearchRectangle.searchRectangle(model.getDataVector());
+
+            resultLabel.setText(rectangle.toString());
+        });
+        closeButton.addActionListener(e -> {
+
         });
     }
 
