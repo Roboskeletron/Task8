@@ -25,7 +25,7 @@ public class SearchRectangle {
                 return rectangle;
         }
 
-        return new Rectangle(new Point(0, 0), new Point(0, 0));
+        return new Rectangle();
     }
 
     public static boolean hasCorrectBoarder(Rectangle rectangle, Vector<Vector> array){
@@ -93,6 +93,6 @@ public class SearchRectangle {
             }
         }
 
-        return new Rectangle(new Point(0, 0), new Point(0, 0));
+        return new Rectangle(start, start);
     }
 }
