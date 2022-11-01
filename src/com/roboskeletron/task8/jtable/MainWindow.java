@@ -93,6 +93,7 @@ public class MainWindow {
                 }
             }
         });
+
         saveButton.addActionListener(e -> {
             if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION){
                 var file = fileChooser.getSelectedFile();
@@ -104,27 +105,61 @@ public class MainWindow {
                 }
             }
         });
+
         addColumn.addActionListener(e -> {
+            var model = (DefaultTableModel) table.getModel();
+            int name  = model.getColumnCount();
+            var rowData = getIntegerVector(model.getRowCount());
 
+            model.addColumn(name, rowData);
         });
+
         addLine.addActionListener(e -> {
+            var model = (DefaultTableModel) table.getModel();
 
+            var columns = getIntegerVector(model.getColumnCount());
+
+            model.addRow(columns);
         });
+
         deleteColumn.addActionListener(e -> {
+            var model = (DefaultTableModel) table.getModel();
+            int columnCount = model.getColumnCount() - 1;
 
+            model.setColumnCount(columnCount);
+
+            model.fireTableDataChanged();
         });
+
         deleteLine.addActionListener(e -> {
+            var model = (DefaultTableModel) table.getModel();
 
+            model.removeRow(model.getRowCount() - 1);
         });
+
         getRectangle.addActionListener(e -> {
             var model = (DefaultTableModel) table.getModel();
             var rectangle = SearchRectangle.searchRectangle(model.getDataVector());
 
             resultLabel.setText(rectangle.toString());
         });
-        closeButton.addActionListener(e -> {
 
+        closeButton.addActionListener(e -> {
+            var model = (DefaultTableModel) table.getModel();
+
+            model.getDataVector().clear();
+            model.setColumnIdentifiers(new Vector<>());
+
+            model.fireTableDataChanged();
         });
+    }
+
+    private Vector<Integer> getIntegerVector(int count) {
+        Vector<Integer> columns = new Vector<>();
+
+        for (int i = 0; i < count; i++)
+            columns.add(0);
+        return columns;
     }
 
     private void saveFile(File file) throws IOException {
