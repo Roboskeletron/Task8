@@ -153,6 +153,8 @@ public class MainWindow {
 
             model.fireTableDataChanged();
         });
+
+        table.setDefaultRenderer(Number.class, new TableCellColorRender());
     }
 
     private Vector<Integer> getIntegerVector(int count) {
