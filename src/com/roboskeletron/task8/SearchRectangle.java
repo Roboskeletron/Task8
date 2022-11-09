@@ -85,7 +85,7 @@ public class SearchRectangle {
         }
 
         for (int h = start.heightIndex() + 1; h < array.size(); h++){
-            for (int w = start.widthIndex(); w < start.widthIndex() + width - 1; w++){
+            for (int w = start.widthIndex(); w < start.widthIndex() + width; w++){
                 if ((Integer) array.get(h).get(w) == 0){
                     Point end = new Point(h - 1, start.widthIndex() + width - 1);
                     return new Rectangle(start, end);
