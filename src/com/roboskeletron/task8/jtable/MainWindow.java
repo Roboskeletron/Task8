@@ -14,7 +14,9 @@ public class MainWindow {
     private final JFrame frame = new JFrame();
     private final JTable table = new JTable(new JTableModel());
 
-    public MainWindow(){
+    public MainWindow() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        UIManager.setLookAndFeel(
+                UIManager.getSystemLookAndFeelClassName());
         Initialize();
     }
 
